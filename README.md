@@ -1,7 +1,6 @@
 # Zero-Downtime Blue-Green Deployment Pipeline
 
-A hands-on implementation of the [Blue-Green Deployment](https://roadmap.sh/projects/blue-green-deployment)
-project from roadmap.sh: deploy a new version of an app into an idle container,
+A hands-on implementation deploy a new version of an app into an idle container,
 health-check it, then atomically switch live traffic to it via Nginx — with
 zero downtime and zero dropped requests.
 
