@@ -11,8 +11,10 @@ permissions:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     outputs:
       image_tag: ${{ steps.vars.outputs.tag }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,16 +31,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./app
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ steps.vars.outputs.tag }}
+          tags: ghcr.io/zitouninidhal/zero-downtime-blue-green-deployment-pipeline:${{ steps.vars.outputs.tag }}
 
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-    environment: production   # requires manual approval if configured in repo settings
+    environment: production
+
     steps:
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v1.0.3
