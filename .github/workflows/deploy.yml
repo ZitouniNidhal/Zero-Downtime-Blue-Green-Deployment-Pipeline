@@ -43,6 +43,16 @@ jobs:
     environment: production
 
     steps:
+      - name: Validate deployment secrets
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          test -n "$DEPLOY_HOST" || { echo "DEPLOY_HOST is not configured in the production environment" >&2; exit 1; }
+          test -n "$DEPLOY_USER" || { echo "DEPLOY_USER is not configured in the production environment" >&2; exit 1; }
+          test -n "$DEPLOY_SSH_KEY" || { echo "DEPLOY_SSH_KEY is not configured in the production environment" >&2; exit 1; }
+
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:

@@ -78,6 +78,9 @@ Flips traffic back to whichever color was previously live.
    approval before the deploy step runs.
 
 **Required GitHub secrets:**
+Add these as secrets under **Settings → Environments → production**. Repository-level
+secrets are not available here unless they are also configured for the environment.
+
 | Secret | Description |
 |---|---|
 | `DEPLOY_HOST` | Server IP/hostname |
