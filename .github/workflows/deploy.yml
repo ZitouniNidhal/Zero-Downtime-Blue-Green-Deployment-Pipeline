@@ -60,11 +60,19 @@ jobs:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_SSH_PASSPHRASE: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '22' }}
         run: |
           test -n "$DEPLOY_HOST" || { echo "DEPLOY_HOST is not configured in the production environment" >&2; exit 1; }
           test -n "$DEPLOY_USER" || { echo "DEPLOY_USER is not configured in the production environment" >&2; exit 1; }
           test -n "$DEPLOY_SSH_KEY" || { echo "DEPLOY_SSH_KEY is not configured in the production environment" >&2; exit 1; }
+          key_file="$RUNNER_TEMP/deploy_key"
+          printf '%s\n' "$DEPLOY_SSH_KEY" > "$key_file"
+          chmod 600 "$key_file"
+          ssh-keygen -y -P "$DEPLOY_SSH_PASSPHRASE" -f "$key_file" > /dev/null || {
+            echo "DEPLOY_SSH_KEY is not a valid private key, or DEPLOY_SSH_PASSPHRASE is incorrect" >&2
+            exit 1
+          }
           case "$DEPLOY_PORT" in
             ''|*[!0-9]*) echo "DEPLOY_PORT must be a numeric SSH port" >&2; exit 1 ;;
           esac
