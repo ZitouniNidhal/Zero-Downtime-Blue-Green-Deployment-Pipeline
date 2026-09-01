@@ -239,11 +239,15 @@ docker push ghcr.io/username/repo:tag
 **Symptom**: "SSH connection failed" or "Deploy command failed"
 
 **Verify**:
-1. SSH key is correctly configured in GitHub Secrets (no extra newlines)
-2. Deploy server is reachable: `ssh -i deploy_key deploy_user@your-server`
-3. Deploy path exists: `/opt/bluegreen-deploy`
-4. Git repo is initialized on server
-5. Deploy user has permission to read/write repository
+1. `DEPLOY_SSH_KEY` contains the complete private key; if it is encrypted, `DEPLOY_SSH_PASSPHRASE` is also configured
+2. `DEPLOY_HOST` resolves to the server and `DEPLOY_PORT` is reachable from GitHub Actions
+3. Deploy server is reachable: `ssh -p <DEPLOY_PORT> -i deploy_key deploy_user@your-server`
+4. Deploy path exists: `/opt/bluegreen-deploy`
+5. Git repo is initialized on server
+6. Deploy user has permission to read/write repository
+
+For a connection timeout, verify the server firewall, cloud security group, SSH
+listen port, and whether the server accepts connections from GitHub-hosted runners.
 
 ### Performance Issues
 

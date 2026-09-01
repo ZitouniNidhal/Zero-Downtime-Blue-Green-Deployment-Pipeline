@@ -154,8 +154,15 @@ docker compose -f docker-compose.monitoring.yml up -d
 
 1. **Add GitHub Secrets** (Settings > Environments > production):
    - `DEPLOY_HOST`: Your server IP/hostname
+   - `DEPLOY_PORT`: SSH port (optional; defaults to `22`)
    - `DEPLOY_USER`: SSH username (e.g., `deploy_user`)
-   - `DEPLOY_SSH_KEY`: Private SSH key (format: `-----BEGIN OPENSSH PRIVATE KEY-----\n...`)
+   - `DEPLOY_SSH_KEY`: The complete private key, including the `BEGIN` and `END` lines
+   - `DEPLOY_SSH_PASSPHRASE`: Passphrase for `DEPLOY_SSH_KEY` (required only for an encrypted key)
+
+   Generate a dedicated deployment key and install its public key in the server user's
+   `~/.ssh/authorized_keys`. Do not commit private keys to the repository. The GitHub
+   Actions runner must also be able to reach `DEPLOY_HOST:DEPLOY_PORT` through the
+   server firewall or security group.
 
 2. **Verify workflow permissions:**
    - Settings > Actions > General
