@@ -60,6 +60,13 @@ docker-compose.override.yml
 # SSH Keys (if using local keys - better to use GitHub secrets)
 deploy_key
 deploy_key.pub
+*.pem
+*.key
+*.pub
+id_rsa
+id_rsa.pub
+*_rsa
+*_rsa.pub
 
 # Temporary files
 tmp/
