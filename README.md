@@ -111,7 +111,9 @@ docker compose -f docker-compose.monitoring.yml up -d
 bluegreen-deploy/
 ├── app/                          # Demo Flask app (swap for your own service)
 │   ├── app.py
+│   ├── test_app.py               # Unit & health check tests
 │   ├── requirements.txt
+│   ├── requirements-dev.txt      # Test dependencies (pytest)
 │   └── Dockerfile
 ├── nginx/
 │   ├── nginx.conf
@@ -122,7 +124,9 @@ bluegreen-deploy/
 ├── monitoring/
 │   ├── prometheus.yml
 │   └── docker-compose.monitoring.yml
-├── .github/workflows/deploy.yml  # CI/CD pipeline
+├── .github/workflows/
+│   ├── ci.yml                    # Automated unit tests on push/PR
+│   └── deploy.yml                # Build, attest provenance & deploy
 ├── docker-compose.yml
 ├── deploy.sh                     # core blue-green deploy logic
 ├── rollback.sh

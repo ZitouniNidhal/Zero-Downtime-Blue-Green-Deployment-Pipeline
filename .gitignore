@@ -1,5 +1,88 @@
+# Environment & Configuration
 .env
+.env.local
+.env.*.local
+
+# Deployment logs
 deployments.log
+*.log
+logs/
+
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.venv
+env/
+venv/
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.code-workspace
+
+# OS
 .DS_Store
+Thumbs.db
+*.swp
+.AppleDouble
+.LSOverride
+
+# Docker
+docker-compose.override.yml
+
+# SSH Keys (if using local keys - better to use GitHub secrets)
+deploy_key
+deploy_key.pub
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Node (if ever adding Node.js components)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE settings
+.vscode/settings.json
+.vscode/launch.json
+
+# Test coverage
+coverage/
+.coverage
+
+# Documentation build outputs
+docs/_build/
+
+# Cache
+.cache/
+*.cache
