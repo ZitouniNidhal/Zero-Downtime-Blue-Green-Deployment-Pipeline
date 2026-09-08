@@ -93,3 +93,7 @@ docs/_build/
 # Cache
 .cache/
 *.cache
+
+# Backup/Duplicate repos
+clean-repo/
+
