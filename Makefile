@@ -115,7 +115,6 @@ deploy:
 
 deploy-v2: deploy
 
-
 rollback:
 	@echo "Rolling back to previous version..."
 	@./rollback.sh
