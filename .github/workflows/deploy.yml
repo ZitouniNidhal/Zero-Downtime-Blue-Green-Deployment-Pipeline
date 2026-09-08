@@ -50,6 +50,7 @@ jobs:
           push-to-registry: true
 
   deploy:
+    if: ${{ secrets.DEPLOY_HOST != '' && secrets.DEPLOY_USER != '' && secrets.DEPLOY_SSH_KEY != '' }}
     needs: build-and-push
     runs-on: ubuntu-latest
     environment: production

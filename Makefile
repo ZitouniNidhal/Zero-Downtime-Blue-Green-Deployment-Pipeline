@@ -64,7 +64,7 @@ logs-app:
 	docker compose logs -f app-blue app-green
 
 logs-db:
-	docker compose logs -f postgres
+	docker compose logs -f db
 
 logs-nginx:
 	docker compose logs -f nginx
@@ -92,7 +92,7 @@ shell-app-green:
 	docker compose exec app-green bash
 
 shell-db:
-	docker compose exec postgres psql -U app_user -d bluegreen_db
+	docker compose exec db psql -U app -d appdb
 
 health-check:
 	@echo "Checking service health..."
@@ -108,10 +108,12 @@ verify-traffic:
 		sleep 0.5; \
 	done
 
-deploy-v2:
-	@echo "Deploying version v2..."
-	@./deploy.sh v2
+deploy:
+	@echo "Deploying version $(or $(TAG),v2)..."
+	@./deploy.sh $(or $(TAG),v2)
 	@echo "Deployment complete"
+
+deploy-v2: deploy
 
 rollback:
 	@echo "Rolling back to previous version..."

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 #
-# rollback.sh - Manually flip nginx traffic back to the other color.
-# Useful if a bad deploy passed health checks but shows issues in production
-# metrics/logs after the switch.
+# rollback.sh - Manually flip Nginx traffic back to the alternate color.
+# Useful if an issue is detected post-deployment.
 
 set -euo pipefail
 
@@ -25,7 +24,15 @@ current_color() {
 LIVE=$(current_color)
 TARGET=$([ "$LIVE" = "blue" ] && echo "green" || echo "blue")
 
-log "Manual rollback requested: ${LIVE} -> ${TARGET}"
+log "=================================================="
+log "Manual Rollback Requested: ${LIVE} -> ${TARGET}"
+log "=================================================="
+
 cp "${NGINX_CONF_DIR}/upstream_${TARGET}.conf" "$ACTIVE_CONF"
-docker exec bg-nginx nginx -s reload
-log "Rollback complete. Traffic now served by ${TARGET}."
+if docker exec bg-nginx nginx -s reload; then
+    log "✓ Rollback complete. Traffic is now served by ${TARGET}."
+    log "=================================================="
+else
+    log "❌ ERROR: Failed to reload Nginx during rollback!"
+    exit 1
+fi

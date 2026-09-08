@@ -115,6 +115,14 @@ bluegreen-deploy/
 │   ├── requirements.txt
 │   ├── requirements-dev.txt      # Test dependencies (pytest)
 │   └── Dockerfile
+├── terraform/                    # Infrastructure as Code (AWS IaaS setup)
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
+│   └── modules/
+│       ├── vpc/                  # VPC, Subnets, Gateways
+│       └── ec2_deployment_host/  # EC2 Host, Security Groups, Docker setup
 ├── nginx/
 │   ├── nginx.conf
 │   └── conf.d/
@@ -138,6 +146,8 @@ bluegreen-deploy/
 - Zero-downtime deployment via reverse-proxy traffic switching
 - Automated pre-switch health checks (fail-safe: bad deploys never go live)
 - Automated rollback on failed verification
+- Infrastructure provisioning via Terraform (AWS VPC, Security Groups, EC2 Host)
 - Auditable deployment history
 - CI/CD from git push to production
 - Observability into which version is serving traffic in real time
+
