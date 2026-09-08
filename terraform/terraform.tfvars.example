@@ -1,0 +1,12 @@
+aws_region          = "us-east-1"
+environment         = "production"
+app_name            = "blue-green-app"
+instance_type       = "t3.medium"
+
+# Paste your public SSH key here (or specify an existing key_name in AWS)
+ssh_public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+
+# Restrict allowed CIDRs for administrative SSH/Monitoring access if needed
+allowed_cidr_blocks = ["0.0.0.0/0"]
+
+git_repo_url        = "https://github.com/ZitouniNidhal/Zero-Downtime-Blue-Green-Deployment-Pipeline.git"
