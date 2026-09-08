@@ -1,6 +1,6 @@
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask import Flask, jsonify
 
@@ -50,8 +50,9 @@ def index():
         message="Hello from the Blue-Green demo app!",
         version=APP_VERSION,
         color=COLOR,
-        time=datetime.utcnow().isoformat(),
+        time=datetime.now(timezone.utc).isoformat(),
     )
+
 
 
 @app.route("/health")
