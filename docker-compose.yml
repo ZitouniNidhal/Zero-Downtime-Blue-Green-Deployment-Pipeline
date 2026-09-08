@@ -20,6 +20,19 @@ services:
     environment:
       - APP_VERSION=${BLUE_TAG:-v1}
       - DEPLOY_COLOR=blue
+      - DB_HOST=${DB_HOST:-db}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${POSTGRES_DB:-appdb}
+      - DB_USER=${POSTGRES_USER:-app}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-app}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - bgnet
     restart: unless-stopped
@@ -31,6 +44,19 @@ services:
     environment:
       - APP_VERSION=${GREEN_TAG:-v1}
       - DEPLOY_COLOR=green
+      - DB_HOST=${DB_HOST:-db}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${POSTGRES_DB:-appdb}
+      - DB_USER=${POSTGRES_USER:-app}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-app}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - bgnet
     restart: unless-stopped
@@ -40,9 +66,14 @@ services:
     image: postgres:16-alpine
     container_name: bg-db
     environment:
-      - POSTGRES_USER=app
-      - POSTGRES_PASSWORD=app
-      - POSTGRES_DB=appdb
+      - POSTGRES_USER=${POSTGRES_USER:-app}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-app}
+      - POSTGRES_DB=${POSTGRES_DB:-appdb}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-appdb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
@@ -54,3 +85,4 @@ networks:
 
 volumes:
   db_data:
+
