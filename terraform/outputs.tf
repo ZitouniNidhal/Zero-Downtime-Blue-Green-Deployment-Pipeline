@@ -1,7 +1,13 @@
+output "ecr_repository_url" {
+  description = "URL of the Amazon ECR Container Registry"
+  value       = module.ecr.repository_url
+}
+
 output "deployment_host_public_ip" {
   description = "Public IP address of the deployment host"
   value       = module.ec2_deployment_host.public_ip
 }
+
 
 output "deployment_host_public_dns" {
   description = "Public DNS of the deployment host"

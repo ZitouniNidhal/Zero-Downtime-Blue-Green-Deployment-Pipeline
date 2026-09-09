@@ -47,8 +47,11 @@ This Terraform module provisions a production-ready AWS infrastructure for hosti
 
 ## Modules Overview
 
-- `modules/vpc/`: Manages VPC, Subnet, Internet Gateway, Route Tables.
-- `modules/ec2_deployment_host/`: Configures Security Group, Key Pair, and EC2 Instance bootstrap user_data script.
+- `versions.tf`: Specifies Terraform (`>= 1.5.0`) & provider constraints (`hashicorp/aws`, `hashicorp/random`), with optional S3 state backend.
+- `providers.tf`: Configures AWS provider settings and mandatory resource tags.
+- `modules/vpc/`: Manages VPC (`10.0.0.0/16`), Public Subnet, Internet Gateway, and Route Tables.
+- `modules/ecr/`: Amazon Elastic Container Registry (ECR) repository with automated image scanning and lifecycle policies.
+- `modules/ec2_deployment_host/`: Configures Security Group (Ports 80, 443, 22, 9090, 3000, 8080), Key Pair, and EC2 Instance bootstrap user_data script.
 
 ## Destroying Infrastructure
 
@@ -56,3 +59,4 @@ To clean up resources provisioned by Terraform:
 ```bash
 terraform destroy -auto-approve
 ```
+
