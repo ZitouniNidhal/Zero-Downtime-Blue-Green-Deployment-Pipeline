@@ -29,6 +29,12 @@ module "vpc" {
   app_name           = var.app_name
 }
 
+module "ecr" {
+  source          = "./modules/ecr"
+  repository_name = var.app_name
+  environment     = var.environment
+}
+
 module "ec2_deployment_host" {
   source              = "./modules/ec2_deployment_host"
   vpc_id              = module.vpc.vpc_id
@@ -41,3 +47,4 @@ module "ec2_deployment_host" {
   app_name            = var.app_name
   git_repo_url        = var.git_repo_url
 }
+
