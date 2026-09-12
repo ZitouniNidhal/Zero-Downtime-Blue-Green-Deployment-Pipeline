@@ -58,7 +58,7 @@ def index():
 @app.route("/health")
 def health():
     db_ok, db_status = check_db_connection()
-    status_code = 200 if db_ok else 200  # Soft health check reporting DB status
+    status_code = 200 if db_ok else 503  # Return 503 Service Unavailable if DB is disconnected
     
     return jsonify(
         status="healthy" if db_ok else "degraded",
