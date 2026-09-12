@@ -1,1 +1,4 @@
--e "flask\npsycopg2-binary\nrequests" 
+
+flask
+psycopg2-binary
+requests 
