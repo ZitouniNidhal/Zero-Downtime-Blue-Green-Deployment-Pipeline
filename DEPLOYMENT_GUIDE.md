@@ -31,9 +31,9 @@
 
 4. **Verify services are running:**
    ```bash
-   curl http://localhost/          # App endpoint
+   curl http://localhost/          # App endpoint - check for "total_visits"
    curl http://localhost/health    # Health check
-   curl http://localhost/metrics   # Prometheus metrics
+   curl http://localhost/metrics   # Prometheus metrics - check for "app_visits_total"
    ```
 
 ## Deploying a New Version
