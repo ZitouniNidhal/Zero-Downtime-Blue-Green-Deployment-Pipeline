@@ -30,3 +30,8 @@ jobs:
       - name: Run pytest
         run: |
           pytest app/test_app.py -v
+          
+      - name: Run Flake8 Linting
+        run: |
+          pip install flake8
+          flake8 app/ --count --select=E9,F63,F7,F82 --show-source --statistics
