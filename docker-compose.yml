@@ -16,9 +16,9 @@ services:
   app-blue:
     build: ./app
     container_name: app-blue
-    image: ${IMAGE_NAME:-bluegreen-app}:${BLUE_TAG:-v1}
+    image: ${IMAGE_NAME:-bluegreen-app}:${BLUE_TAG:-v2}
     environment:
-      - APP_VERSION=${BLUE_TAG:-v1}
+      - APP_VERSION=${BLUE_TAG:-v2}
       - DEPLOY_COLOR=blue
       - DB_HOST=${DB_HOST:-db}
       - DB_PORT=${DB_PORT:-5432}
@@ -40,9 +40,9 @@ services:
   app-green:
     build: ./app
     container_name: app-green
-    image: ${IMAGE_NAME:-bluegreen-app}:${GREEN_TAG:-v1}
+    image: ${IMAGE_NAME:-bluegreen-app}:${GREEN_TAG:-v2}
     environment:
-      - APP_VERSION=${GREEN_TAG:-v1}
+      - APP_VERSION=${GREEN_TAG:-v2}
       - DEPLOY_COLOR=green
       - DB_HOST=${DB_HOST:-db}
       - DB_PORT=${DB_PORT:-5432}
