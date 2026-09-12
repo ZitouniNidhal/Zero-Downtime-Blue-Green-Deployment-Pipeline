@@ -34,7 +34,7 @@ def test_health_check_route(client):
 def test_health_check_degraded(client):
     with patch("app.check_db_connection", return_value=(False, "connection refused")):
         response = client.get("/health")
-        assert response.status_code == 200
+        assert response.status_code == 503
         data = response.get_json()
         assert data["status"] == "degraded"
         assert data["database"]["connected"] is False

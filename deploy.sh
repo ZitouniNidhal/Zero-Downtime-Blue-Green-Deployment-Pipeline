@@ -99,13 +99,15 @@ fi
 
 # 4. Post-Switch Verification
 log "Verifying post-switch live traffic..."
+# Verify that the response contains the TARGET_TAG
+RESPONSE_BODY=$(docker exec bg-nginx curl -s http://localhost/)
 VERIFY_STATUS=$(docker exec bg-nginx curl -s -o /dev/null -w "%{http_code}" "http://localhost/health" || echo "000")
 
-if [ "$VERIFY_STATUS" = "200" ]; then
+if [ "$VERIFY_STATUS" = "200" ] && echo "$RESPONSE_BODY" | grep -q "$TARGET_TAG"; then
     log "✓ Deployment successful! Traffic is now served by ${TARGET} (${TARGET_TAG})."
     log "=================================================="
 else
-    log "⚠️ Post-switch verification failed (HTTP ${VERIFY_STATUS}). Triggering automatic rollback to ${LIVE}!"
+    log "⚠️ Post-switch verification failed (HTTP ${VERIFY_STATUS} or version mismatch). Triggering automatic rollback to ${LIVE}!"
     cp "${NGINX_CONF_DIR}/upstream_${LIVE}.conf" "$ACTIVE_CONF"
     docker exec bg-nginx nginx -s reload
     log "Automatic rollback to ${LIVE} complete."
