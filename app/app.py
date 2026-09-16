@@ -17,6 +17,12 @@ logger = logging.getLogger("app")
 APP_VERSION = os.environ.get("APP_VERSION", "v1")
 COLOR = os.environ.get("DEPLOY_COLOR", "unknown")
 
+DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = os.environ.get("DB_PORT")
+DB_NAME = os.environ.get("DB_NAME")
+DB_USER = os.environ.get("DB_USER")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+
 def init_db():
     """Initialize the database schema if it doesn't exist."""
     try:
